@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Страница «О себе»: техногик и обзорщик гаджетов. Лабораторная работа №5: DOM и localStorage.">
+  <title>О себе — техногик и обзорщик гаджетов</title>
+
+  <!-- Внешний файл со всеми основными стилями -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Внутренний блок стилей: высота и шрифт полей ввода -->
+  <style>
+    .field input,
+    .field textarea {
+      min-height: 48px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body id="top">
+
+  <header class="site-header">
+    <img class="avatar" src="images/avatar.svg" alt="Аватар автора: стилизованный портрет техногика в наушниках" width="140" height="140">
+
+    <!-- Inline-стиль: выравнивание заголовка по центру -->
+    <h1 style="text-align: center;">Имя Фамилия</h1>
+
+    <p class="role">Техногик и обзорщик гаджетов</p>
+  </header>
+
+  <!-- Flexbox: горизонтальное адаптивное меню -->
+  <nav class="site-nav">
+    <ul class="nav-list">
+      <li><a href="#gadgets">Гаджеты недели</a></li>
+      <li><a href="#specs">Сравнение</a></li>
+      <li><a href="#collection">Моя коллекция</a></li>
+      <li><a href="#skills">Навыки</a></li>
+      <li><a href="#projects">Проекты</a></li>
+      <li><a href="#contact">Обратная связь</a></li>
+    </ul>
+  </nav>
+
+  <div class="layout">
+    <main class="content">
+      <p class="intro">
+        Разбираю гаджеты до цифр: замеряю автономность, нагрев и яркость экрана,
+        сравниваю характеристики и пишу обзоры, по которым можно принять решение
+        о покупке, а не просто посмотреть на красивые фото.
+      </p>
+
+      <!-- Flexbox: карточки в ряд -->
+      <section id="gadgets">
+        <h2>Гаджеты недели</h2>
+        <p class="section-note">Устройства, которые сейчас лежат у меня на столе.</p>
+        <div class="cards">
+          <article class="card">
+            <img src="images/phone.svg" alt="Смартфон с тройной камерой" width="400" height="300">
+            <div class="card__body">
+              <h3>Samsung Galaxy S25 Ultra</h3>
+              <p>Зум до 100× и стилус в корпусе.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="images/laptop.svg" alt="Тонкий ноутбук с открытой крышкой" width="400" height="300">
+            <div class="card__body">
+              <h3>Apple MacBook Air M4</h3>
+              <p>Полная тишина: корпус без вентилятора.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="images/headphones.svg" alt="Полноразмерные беспроводные наушники" width="400" height="300">
+            <div class="card__body">
+              <h3>Sony WH-1000XM6</h3>
+              <p>Шумоподавление, которое глушит метро.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="images/handheld.svg" alt="Портативная игровая консоль с экраном и стиками" width="400" height="300">
+            <div class="card__body">
+              <h3>Valve Steam Deck OLED</h3>
+              <p>OLED-экран и игры из Steam в дороге.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CSS Grid: дашборд сравнения характеристик -->
+      <section id="specs">
+        <h2>Сравнение характеристик</h2>
+        <p class="section-note">Результаты моих замеров: три параметра для двух устройств.</p>
+        <div class="dashboard">
+          <article class="metric">
+            <p class="metric__device">Galaxy S25 Ultra</p>
+            <h3>Процессор</h3>
+            <p class="metric__value"><data value="3.39">3,39</data> <span class="metric__unit">ГГц</span></p>
+            <p class="metric__note">Частота старшего ядра под нагрузкой</p>
+          </article>
+
+          <article class="metric">
+            <p class="metric__device">Galaxy S25 Ultra</p>
+            <h3>Экран</h3>
+            <p class="metric__value"><data value="1480">1480</data> <span class="metric__unit">нит</span></p>
+            <p class="metric__note">Пиковая яркость на солнце</p>
+          </article>
+
+          <article class="metric">
+            <p class="metric__device">Galaxy S25 Ultra</p>
+            <h3>Батарея</h3>
+            <p class="metric__value"><data value="9.5">9,5</data> <span class="metric__unit">ч</span></p>
+            <p class="metric__note">Экран активен, смешанный сценарий</p>
+          </article>
+
+          <article class="metric">
+            <p class="metric__device">Steam Deck OLED</p>
+            <h3>Процессор</h3>
+            <p class="metric__value"><data value="3.5">3,5</data> <span class="metric__unit">ГГц</span></p>
+            <p class="metric__note">Частота в режиме максимальной мощности</p>
+          </article>
+
+          <article class="metric">
+            <p class="metric__device">Steam Deck OLED</p>
+            <h3>Экран</h3>
+            <p class="metric__value"><data value="600">600</data> <span class="metric__unit">нит</span></p>
+            <p class="metric__note">Яркость в HDR-сценах</p>
+          </article>
+
+          <article class="metric">
+            <p class="metric__device">Steam Deck OLED</p>
+            <h3>Батарея</h3>
+            <p class="metric__value"><data value="4.2">4,2</data> <span class="metric__unit">ч</span></p>
+            <p class="metric__note">Средние настройки, ограничение 60 кадров</p>
+          </article>
+        </div>
+        <p><button class="btn" type="button" id="calc-button">Посчитать автономность</button></p>
+      </section>
+
+      <!-- Интерактивный блок ЛР №5 -->
+      <section id="collection">
+        <h2>Моя коллекция</h2>
+        <p class="section-note">Карточки добавляются и удаляются без перезагрузки, список и тема сохраняются в localStorage.</p>
+
+        <div class="panel">
+          <div class="panel__row">
+            <input type="text" id="gadget-name" placeholder="Название гаджета">
+            <input type="text" id="gadget-specs" placeholder="Характеристики через запятую">
+          </div>
+          <p class="form-error" id="form-error"></p>
+          <div class="panel__row">
+            <button class="btn" type="button" id="add-button">Добавить гаджет</button>
+            <button class="btn" type="button" id="remove-last-button">Удалить последний</button>
+            <button class="btn" type="button" id="toggle-list-button">Скрыть список</button>
+            <button class="btn" type="button" id="theme-button">Светлая тема</button>
+          </div>
+          <p class="counter" id="counter"></p>
+        </div>
+
+        <ul class="gadget-list" id="gadget-list"></ul>
+      </section>
+
+      <section id="skills">
+        <h2>Навыки</h2>
+        <ul class="skills">
+          <li class="skill-card">
+            <span class="skill-card__tag">01</span>
+            <h3>Тестирование устройств</h3>
+            <p>Автономность, нагрев под нагрузкой, стабильность в бенчмарках.</p>
+          </li>
+          <li class="skill-card">
+            <span class="skill-card__tag">02</span>
+            <h3>Написание обзоров</h3>
+            <p>Чёткая структура, проверяемые выводы, честные плюсы и минусы.</p>
+          </li>
+          <li class="skill-card">
+            <span class="skill-card__tag">03</span>
+            <h3>Сравнение характеристик</h3>
+            <p>Сводные таблицы и оценка соотношения цены и возможностей.</p>
+          </li>
+          <li class="skill-card">
+            <span class="skill-card__tag">04</span>
+            <h3>Анализ дисплеев</h3>
+            <p>Яркость, цветопередача, мерцание подсветки.</p>
+          </li>
+          <li class="skill-card">
+            <span class="skill-card__tag">05</span>
+            <h3>Оценка камер</h3>
+            <p>Съёмка одинаковых тестовых сцен днём, ночью и в помещении.</p>
+          </li>
+          <li class="skill-card">
+            <span class="skill-card__tag">06</span>
+            <h3>Работа с данными</h3>
+            <p>Обработка результатов тестов, графики и таблицы на Python.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section id="projects">
+        <h2>Проекты</h2>
+        <p class="section-note">Гаджеты, которые я хочу протестировать и описать в ближайших обзорах:</p>
+        <ol class="projects">
+          <li>
+            <strong>Samsung Galaxy S25 Ultra</strong> — смартфон: проверю камеру с зумом,
+            время работы от батареи и работу стилуса в повседневных задачах.
+          </li>
+          <li>
+            <strong>Apple MacBook Air на чипе M4</strong> — ноутбук без вентилятора:
+            измерю, насколько падает производительность при долгой нагрузке.
+          </li>
+          <li>
+            <strong>Sony WH-1000XM6</strong> — беспроводные наушники: сравню шумоподавление
+            с прошлым поколением и оценю качество микрофонов в звонках.
+          </li>
+          <li>
+            <strong>Valve Steam Deck OLED</strong> — портативная консоль:
+            протестирую автономность в разных играх и нагрев корпуса.
+          </li>
+        </ol>
+      </section>
+
+      <section id="contact">
+        <h2>Обратная связь</h2>
+        <p class="section-note">Предложите гаджет для следующего обзора или задайте вопрос.</p>
+        <form class="feedback" action="#" method="post">
+          <div class="field">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" placeholder="Например, Алексей" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="name@example.com" required>
+          </div>
+          <div class="field">
+            <label for="message">Сообщение</label>
+            <textarea id="message" name="message" rows="6" placeholder="Какой гаджет протестировать следующим?" required></textarea>
+          </div>
+          <button class="btn" type="submit">Отправить сообщение</button>
+        </form>
+      </section>
+    </main>
+
+    <aside class="sidebar">
+      <h2>Любимые технологии</h2>
+      <dl class="spec">
+        <dt>Бренд</dt>
+        <dd>Apple — за единую экосистему и качество сборки</dd>
+        <dt>Категория</dt>
+        <dd>Смартфоны и носимая электроника</dd>
+        <dt>Технология</dt>
+        <dd>OLED-дисплеи с высокой частотой обновления</dd>
+        <dt>Стиль</dt>
+        <dd>Металл, стекло и минимум лишнего</dd>
+      </dl>
+
+      <h3>Где смотрю характеристики</h3>
+      <ul class="sources">
+        <li><a href="https://www.gsmarena.com/">GSMArena</a></li>
+        <li><a href="https://www.dxomark.com/">DXOMARK</a></li>
+        <li><a href="https://www.ixbt.com/">iXBT.com</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Имя Фамилия. Все права защищены.</p>
+  </footer>
+
+  <a class="to-top" href="#top">Наверх</a>
+
+  <!-- Скрипты: расчёты (ЛР №4) и работа с DOM (ЛР №5) -->
+  <script src="js/script.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

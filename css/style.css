@@ -1,0 +1,667 @@
+/* ==========================================================
+   Лабораторная работа №5. DOM, интерактивность, темы
+   Тема: техногик и обзорщик гаджетов
+   Брейкпоинты: 900px — планшет, 600px — мобильный
+   ========================================================== */
+
+/* ---------- Переменные: тёмная тема по умолчанию ---------- */
+:root {
+  --silver: #c8ccd2;
+  --accent: #000000;
+
+  --bg: #000000;
+  --surface: #17181b;
+  --surface-2: #202226;
+  --border: #34363b;
+  --text: #eceef1;
+  --text-muted: #b0b5bc;
+  --ink: #2c2f33;
+
+  --metal: linear-gradient(135deg, #f2f3f5 0%, #b4b9c0 40%, #e4e6e9 62%, #929aa3 100%);
+
+  --font-body: Arial, Helvetica, sans-serif;
+  --radius: 12px;
+  --gap: 16px;
+  --nav-height: 56px;
+}
+
+/* ---------- Светлая тема: класс переключается из JS ---------- */
+body.theme-light {
+  --silver: #2f343b;
+  --bg: #eef0f3;
+  --surface: #ffffff;
+  --surface-2: #e4e7eb;
+  --border: #c9ced5;
+  --text: #15171a;
+  --text-muted: #4a4f57;
+}
+
+/* ---------- Базовые стили ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+a {
+  color: var(--text);
+}
+
+a:hover {
+  color: var(--silver);
+}
+
+a:visited {
+  color: var(--text-muted);
+}
+
+/* ---------- Шапка ---------- */
+.site-header {
+  padding: 48px 24px 32px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.avatar {
+  display: block;
+  margin: 0 auto 20px;
+  border: 3px solid var(--silver);
+  border-radius: 50%;
+}
+
+.site-header h1 {
+  font-size: 40px;
+}
+
+.role {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 18px;
+  text-align: center;
+}
+
+/* ---------- Flexbox: меню ---------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 4px;
+  min-height: var(--nav-height);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-list a {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 2px solid transparent;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-list a:hover {
+  background-color: var(--surface-2);
+  border-bottom-color: var(--silver);
+}
+
+/* ---------- Сетка страницы ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  align-items: start;
+}
+
+.content {
+  position: static;
+  min-width: 0;
+}
+
+.intro {
+  font-size: 19px;
+  color: var(--text-muted);
+}
+
+section {
+  padding-top: 32px;
+  margin-bottom: 24px;
+}
+
+h2 {
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 26px;
+}
+
+.section-note {
+  color: var(--text-muted);
+}
+
+/* ---------- Flexbox: карточки «Гаджеты недели» ---------- */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 calc((100% - 3 * var(--gap)) / 4);
+  min-width: 0;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.card__body {
+  flex-grow: 1;
+  padding: 14px 16px 16px;
+}
+
+.card h3 {
+  margin-bottom: 6px;
+  font-size: 17px;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.card:hover {
+  border-color: var(--silver);
+}
+
+/* ---------- Grid: дашборд характеристик ---------- */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.metric {
+  padding: 18px 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.metric__device {
+  margin: 0 0 4px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.metric h3 {
+  margin-bottom: 10px;
+  font-size: 17px;
+}
+
+.metric__value {
+  margin: 0 0 8px;
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.metric__unit {
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--text-muted);
+}
+
+.metric__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ==========================================================
+   Интерактивный блок «Моя коллекция» (ЛР №5)
+   ========================================================== */
+
+.panel {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.panel__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.panel__row:last-child {
+  margin-bottom: 0;
+}
+
+.panel input {
+  flex: 1 1 200px;
+  min-width: 0;
+  padding: 11px 14px;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.panel input:focus {
+  outline: none;
+  border-color: var(--silver);
+}
+
+/* Сообщение об ошибке ввода */
+.form-error {
+  margin: 0;
+  color: #e0675f;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+body.theme-light .form-error {
+  color: #b32d22;
+}
+
+.counter {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Список добавленных гаджетов */
+.gadget-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Класс добавляется из JS для скрытия блока */
+.is-hidden {
+  display: none;
+}
+
+.gadget {
+  position: relative;
+  padding: 18px 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.gadget h3 {
+  margin-bottom: 10px;
+  padding-right: 90px;
+  font-size: 18px;
+}
+
+.gadget ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.gadget li {
+  margin-bottom: 4px;
+}
+
+.gadget .btn-remove {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.empty-note {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* ---------- Навыки: металлические пластины ---------- */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-card {
+  position: relative;
+  padding: 22px 20px 18px;
+  border-radius: var(--radius);
+  background-image: var(--metal);
+  color: var(--accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.skill-card h3 {
+  margin-bottom: 6px;
+  font-size: 18px;
+}
+
+.skill-card p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.skill-card__tag {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.skill-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow:
+    3px 3px 0 #2b2d31,
+    6px 6px 0 #232529,
+    9px 9px 0 #1b1d21,
+    12px 12px 0 #131519,
+    15px 15px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- Проекты ---------- */
+.projects {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.projects li {
+  margin-bottom: 14px;
+  padding-left: 6px;
+}
+
+.projects li::marker {
+  color: var(--silver);
+  font-weight: bold;
+}
+
+/* ---------- Форма обратной связи ---------- */
+.feedback {
+  max-width: 520px;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--silver);
+}
+
+/* ---------- Кнопки ---------- */
+.btn,
+.btn-remove {
+  background-image: var(--metal);
+  color: var(--accent);
+  font-family: inherit;
+  font-weight: bold;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+
+.btn {
+  padding: 13px 24px;
+  font-size: 16px;
+}
+
+.btn-remove {
+  padding: 7px 14px;
+  font-size: 13px;
+}
+
+.btn:hover,
+.btn-remove:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.btn:focus,
+.btn-remove:focus {
+  outline: none;
+  box-shadow: 0 0 10px var(--silver);
+}
+
+.btn:active,
+.btn-remove:active {
+  transform: translateY(2px);
+}
+
+/* ---------- Боковая панель ---------- */
+.sidebar {
+  position: sticky;
+  top: calc(var(--nav-height) + 24px);
+  padding: 24px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.sidebar h2 {
+  font-size: 18px;
+}
+
+.sidebar h3 {
+  margin: 24px 0 10px;
+  color: var(--silver);
+  font-size: 15px;
+}
+
+.spec {
+  margin: 0;
+}
+
+.spec dt {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.spec dd {
+  margin: 2px 0 14px;
+  font-weight: bold;
+}
+
+.sources {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* ---------- Подвал ---------- */
+.site-footer {
+  padding: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* ---------- Кнопка «Наверх»: position: fixed ---------- */
+.to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 20;
+  padding: 10px 16px;
+  background-color: var(--surface);
+  border: 1px solid var(--silver);
+  border-radius: 24px;
+  color: var(--text);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.to-top:hover {
+  background-color: var(--silver);
+  color: var(--surface);
+}
+
+/* ==========================================================
+   Медиа-запросы
+   ========================================================== */
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 24px 20px 56px;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .card {
+    flex-basis: calc((100% - var(--gap)) / 2);
+  }
+
+  .dashboard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-header {
+    padding: 36px 20px 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex-basis: 100%;
+  }
+
+  .card img {
+    height: 180px;
+    object-fit: contain;
+    background-color: #101114;
+  }
+
+  .dashboard,
+  .skills,
+  .gadget-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nav-list {
+    justify-content: flex-start;
+  }
+
+  .nav-list a {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+
+  .site-header h1 {
+    font-size: 28px;
+  }
+
+  .intro {
+    font-size: 17px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .metric__value {
+    font-size: 30px;
+  }
+
+  .layout {
+    padding: 20px 16px 48px;
+  }
+}
